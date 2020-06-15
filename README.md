@@ -1,2 +1,62 @@
 # What is Cloud?
-loud computing is the on-demand availability of computer system resources, especially data storage (cloud storage) and computing power, without direct active management by the user. The term is generally used to describe data centers available to many users over the Internet. Large clouds, predominant today, often have functions distributed over multiple locations from central servers. If the connection to the user is relatively close, it may be designated an edge server.
+Cloud computing is the on-demand availability of computer system resources, especially data storage (cloud storage) and computing power, without direct active management by the user.  We can quickly spin up resources as you need them–from infrastructure services, such as compute, storage, and databases, to Internet of Things, machine learning, data lakes and analytics, and much more. Most of the Cloud Providers work on the agreement of Pay-as-we-go, which means that startups don't need a huge amount to setup their business.
+
+# Working on Clouds
+Most of the cloud uses magnificient GUI interface. However, almost all the companies don't prefer a GUI because automation isn't possible.
+So to survive in this automation world they use CLI(COMMAND-LINE-INTERFACE). CLI commands can easily be scheduled and hence, things can be automated as per choice.
+
+# What is the main issue then?
+The different Cloud services uses different CLI command. Hence it becomes a tedious task for Cloud Engineers to learn CLI commands of all the services.
+
+# Is there any Solution?
+Yes. A single tool called terraform  enables you to safely and predictably create, change, and improve infrastructure without even giving the importance to different services of cloud. It is highly intelligent. The plugins makes the terraform more genious.
+
+# What are the minimum sevices required which need to be used to perform Automation?
+* EC2 [Elastic Compute Cloud]
+* EBS[Elastic Block Storage]
+* S3[Simple Storage Service]
+* Cloudfront
+
+# THE PROJECT
+### Launching a Web Server using Terraform
+
+#### Step 1:- configure AWS profile in the local system using cmd.
+
+>aws configure --profile NIRBHAY  <br>
+>AWS Access Key ID [****************CKMR]: <br>
+>AWS Secret Access Key [****************OKDB]: <br>
+>Default region name [ap-south-1]: <br>
+>Default output format [json]: <br>
+
+#### Step 2:- After configuring your system, create a key-pair or you can use existing key-pair. Launch an ec2 instance, create an EBS volume. attach the ebs volume with ec2. Note that security group should have SSH enabled on port 22 & HTTP enabled on port 80.
+
+>provider "aws" { <br>
+>  region  = "ap-south-1"  <br>
+>  profile = "NIRBHAY"  <br>
+>}  <br>
+
+>resource "aws_instance" "web" {  <br>
+>  ami           =   "ami-052c08d70def0ac62"  <br>
+>  instance_type =   "t2.micro"  <br>
+>  key_name      =   "mykey3698"  <br>
+>  security_groups = ["launch-wizard-1"]  <br>
+>
+>connection {  <br>
+>    type     = "ssh"  <br>
+>    user     = "ec2-user"  <br>
+>    private_key = file("C:/Users/NIRBHAY/Downloads/mykey3698.pem")  <br>
+>    host     = aws_instance.web.public_ip  <br>
+>  }  <br>
+>
+> provisioner "remote-exec" {  <br>
+>    inline = [  <br>
+>      "sudo yum install httpd php git -y", <br>
+>      "sudo systemctl restart httpd",  <br>
+>      "sudo systemctl enable httpd",  <br>
+>    ]  <br>
+>  }  <br>
+>
+>  tags = {  <br>
+>    Name = "RedHatWorld"  <br>
+>  }  <br>
+>}  <br>
