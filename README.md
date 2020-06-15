@@ -71,3 +71,42 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >    Name = "RedHat_ebs"<br>
 >   }<br>
 >}<br>
+
+#### Step 4:-  Attach EBS volume to the instance.
+>resource "aws_volume_attachment" "ebs_att" {<br>
+>  device_name = "/dev/sdd"<br>
+>  volume_id   = "${aws_ebs_volume.add_vol.id}"<br>
+>  instance_id = "${aws_instance.web.id}"<br>
+>  force_detach = true<br>
+>}<br>
+
+#### Step 5:- Retrieve the public ip of instance and store it in a file locally as it may be used later.
+>resource "null_resource" "save_ip" {<br>
+>  provisioner "local-exec" {<br>
+>    command = "echo ${aws_instance.web.public_ip} > public_ip.txt"<br>
+>  }<br>
+>}<br>
+
+#### Step 6:- Mount EBS volume to the folder /var/ww/html so that it can be deployed by the Apache Web Server.
+>resource "null_resource" "mount_vol"  {
+>
+>    depends_on = [ <br>
+>        aws_volume_attachment.ebs_att,<br>
+>      ]<br>
+>
+>connection {<br>
+>    type     = "ssh"<br>
+>    user     = "ec2-user"<br>
+>    private_key = file("C:/Users/NIRBHAY/Downloads/mykey3698.pem")<br>
+>    host     = aws_instance.web.public_ip<br>
+>  }
+>
+>provisioner "remote-exec" {<br>
+>    inline = [<br>
+>      "sudo mkfs.ext4 /dev/xvdd",<br>
+>      "sudo mount /dev/xvdd /var/www/html",<br>
+>      "sudo rm -rf /var/www/html/*",<br>
+>      "sudo git clone https://github.com/NirbhayMaitra/MultiCloud_proj1.git /var/www/html"<br>
+>    ]<br>
+>  }<br>
+>}<br>
