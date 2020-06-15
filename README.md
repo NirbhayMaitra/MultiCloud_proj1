@@ -127,7 +127,7 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >
 >  output   "s3bucket_id"   {<br>
 >
->          value  =   aws_s3_bucket.S3_buck.id<br>
+>          value  =   aws_s3_bucket.S3_buck.id 
 > }
 
 #### Step 8:- Now upload the images into the S3 Bucket.
@@ -157,23 +157,23 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >
 > default_cache_behavior {<br>
 >        
->         allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]<br>
->         cached_methods   = ["GET", "HEAD"]<br>
->         target_origin_id = "${local.s3_origin_id}"<br>
+>         allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+>         cached_methods   = ["GET", "HEAD"]
+>         target_origin_id = "${local.s3_origin_id}"
 >
 > forwarded_values {<br>
 >
->       query_string = false<br>
+>       query_string = false
 >       
 > cookies {<br>
->          forward = "none"<br>
+>          forward = "none"
 >         }<br>
 >    }<br>
 >          
 >          viewer_protocol_policy = "allow-all"<br>
->          min_ttl                = 0<br>
->          default_ttl            = 3600<br>
->          max_ttl                = 86400<br>
+>          min_ttl                = 0
+>          default_ttl            = 3600
+>          max_ttl                = 86400
 >
 >}
 >  restrictions {<br>
@@ -182,7 +182,7 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >          }<br>
 >     }<br>
 > viewer_certificate {<br>
->       cloudfront_default_certificate = true <br>
+>       cloudfront_default_certificate = true 
 >       } <br>
 > }<br>
 >
