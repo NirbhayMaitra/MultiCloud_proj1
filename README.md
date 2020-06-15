@@ -1,21 +1,28 @@
 # What is Cloud?
-Cloud computing is the on-demand availability of computer system resources, especially data storage (cloud storage) and computing power, without direct active management by the user.  We can quickly spin up resources as you need them–from infrastructure services, such as compute, storage, and databases, to Internet of Things, machine learning, data lakes and analytics, and much more. Most of the Cloud Providers work on the agreement of Pay-as-we-go, which means that startups don't need a huge amount to setup their business.
+Cloud computing is the on-demand availability of computer system resources, especially data storage (cloud storage) and computing power, without direct active management by the user.  We can quickly spin up resources as you need them–from infrastructure services, such as compute, storage, and databases, to Internet of Things, machine learning, data lakes and analytics, and much more. Most of the Cloud Providers work on the agreement of Pay-as-we-go, which means that startups don't need a huge amount to setup their business. <br>
+<img src="images/awscloud.jpg">
 
 # Working on Clouds
 Most of the cloud uses magnificient GUI interface. However, almost all the companies don't prefer a GUI because automation isn't possible.
-So to survive in this automation world they use CLI(COMMAND-LINE-INTERFACE). CLI commands can easily be scheduled and hence, things can be automated as per choice.
+So to survive in this automation world they use CLI(COMMAND-LINE-INTERFACE). CLI commands can easily be scheduled and hence, things can be automated as per choice. <br>
+<img src="images/workingoncloud.jpg">
 
 # What is the main issue then?
 The different Cloud services uses different CLI command. Hence it becomes a tedious task for Cloud Engineers to learn CLI commands of all the services.
 
 # Is there any Solution?
-Yes. A single tool called terraform  enables you to safely and predictably create, change, and improve infrastructure without even giving the importance to different services of cloud. It is highly intelligent. The plugins makes the terraform more genious.
+Yes. A single tool called terraform  enables you to safely and predictably create, change, and improve infrastructure without even giving the importance to different services of cloud. It is highly intelligent. The plugins makes the terraform more genious. <br>
+<img src="images/terraform.jpg">
 
 # What are the minimum sevices required which need to be used to perform Automation?
-* EC2 [Elastic Compute Cloud]
-* EBS[Elastic Block Storage]
-* S3[Simple Storage Service]
-* Cloudfront
+* EC2 [Elastic Compute Cloud] <br>
+<img src="images/ec2.jpg">
+* EBS[Elastic Block Storage] <br>
+<img src="images/ebs.jpg">
+* S3[Simple Storage Service] <br>
+<img src="images/s3.jpg">
+* Cloudfront <br>
+<img src="images/cloudfront.jpg">
 
 # THE PROJECT
 ### Launching a Web Server using Terraform
