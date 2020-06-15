@@ -182,14 +182,19 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >          }<br>
 >     }<br>
 > viewer_certificate {<br>
->       cloudfront_default_certificate = true<br>
->       }<br>
->}<br>
+>       cloudfront_default_certificate = true <br>
+>       } <br>
+> }<br>
+>
+>resource "null_resource" "local_exec"  { <br>
+>
+>
+>     depends_on =[
+>         null_resource.mount_vol ,
+>          ] 
 
-resource "null_resource" "local_exec"  { <br>
-
-
-     depends_on = [<br>
-         null_resource.mount_vol ,<br>
-          ] <br>
-
+#### Step 10:- Now the following part of the code below will automatically retrieve the public ip of our instance and open it in chrome. This will land us on the home page of our website that is present in /var/www/html.
+>provisioner "local-exec" { <br>
+>           command = "start chrome  ${aws_instance.web.public_ip}" <br>
+>              } <br>
+>        } <br>
