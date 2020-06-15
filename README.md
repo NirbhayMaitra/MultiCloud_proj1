@@ -110,3 +110,86 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >    ]<br>
 >  }<br>
 >}<br>
+
+#### Step 7:- Now create an S3 bucket on AWS.
+>resource "aws_s3_bucket" "S3_buck" {<br>
+>  bucket = "redhatbucket3698"<br>
+>  acl    = "private"<br>
+>  force_destroy = true<br>
+>
+>  tags={<br>
+>    Name = "NIRBHAY3698"<br>
+>}
+>}
+>   locals {<br>
+>     s3_origin_id   = "s3bucketOrigin"<br>
+>}
+>
+>  output   "s3bucket_id"   {<br>
+>
+>          value  =   aws_s3_bucket.S3_buck.id<br>
+> }
+
+#### Step 8:- Now upload the images into the S3 Bucket.
+> resource "aws_s3_bucket_object" "s3images" {<br>     
+>    bucket ="${aws_s3_bucket.S3_buck.id}"<br>
+>    key = "RedHat_pic"<br>
+>    source = "C:/Users/NIRBHAY/Desktop/doggo.jpeg"<br>
+>    acl = "public-read"<br>
+>}<br>
+
+#### Step 9:- Create a CloudFront & connect it to the S3 bucket. The CloudFront ensures speedy delievery of content using the edge locations from AWS across the world.
+>resource "aws_cloudfront_distribution" "cloudcdn27" {<br>
+>  origin {<br>
+>    domain_name = "${aws_s3_bucket.S3_buck.bucket_regional_domain_name}"<br>
+>    origin_id   = "${local.s3_origin_id}"<br>
+>
+>    custom_origin_config {<br>
+>         http_port = 80<br>
+>         https_port = 80<br>
+>         origin_protocol_policy = "match-viewer"<br>
+>         origin_ssl_protocols = ["TLSv1", "TLSv1.1", "TLSv1.2"] <br>
+>    }
+>  }
+>
+>    enabled = true<br>
+>
+>
+> default_cache_behavior {<br>
+>        
+>         allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]<br>
+>         cached_methods   = ["GET", "HEAD"]<br>
+>         target_origin_id = "${local.s3_origin_id}"<br>
+>
+> forwarded_values {<br>
+>
+>       query_string = false<br>
+>       
+> cookies {<br>
+>          forward = "none"<br>
+>         }<br>
+>    }<br>
+>          
+>          viewer_protocol_policy = "allow-all"<br>
+>          min_ttl                = 0<br>
+>          default_ttl            = 3600<br>
+>          max_ttl                = 86400<br>
+>
+>}
+>  restrictions {<br>
+>         geo_restriction {<br>
+>           restriction_type = "none"<br>
+>          }<br>
+>     }<br>
+> viewer_certificate {<br>
+>       cloudfront_default_certificate = true<br>
+>       }<br>
+>}<br>
+
+resource "null_resource" "local_exec"  { <br>
+
+
+     depends_on = [<br>
+         null_resource.mount_vol ,<br>
+          ] <br>
+
