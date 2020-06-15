@@ -28,7 +28,7 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >Default region name [ap-south-1]: <br>
 >Default output format [json]: <br>
 
-#### Step 2:- After configuring your system, create a key-pair or you can use existing key-pair. Launch an ec2 instance, create an EBS volume. attach the ebs volume with ec2. Note that security group should have SSH enabled on port 22 & HTTP enabled on port 80.
+#### Step 2:- After configuring your system, create a key-pair or you can use existing key-pair. Launch an ec2 instance. Note that security group should have SSH enabled on port 22 & HTTP enabled on port 80.
 
 >provider "aws" { <br>
 >  region  = "ap-south-1"  <br>
@@ -60,3 +60,14 @@ Yes. A single tool called terraform  enables you to safely and predictably creat
 >    Name = "RedHatWorld"  <br>
 >  }  <br>
 >}  <br>
+
+#### Step 3:- Create an EBS Volume. Always launch your EBS volume in the same availability zone as EC2 as launching in different region will result in connectivity issue.. To resolve this, retrieve the availability zone of the instance and use it.
+
+>resource "aws_ebs_volume" "add_vol" {<br>
+>  availability_zone = aws_instance.web.availability_zone<br>
+>  size              = 1<br>
+>
+>  tags={<br>
+>    Name = "RedHat_ebs"<br>
+>   }<br>
+>}<br>
